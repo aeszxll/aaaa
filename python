@@ -1,0 +1,45 @@
+import discord
+from discord.ext import commands
+import os, random
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=discord.Intents.default())
+
+facts = ['Интересный факт - Промышленные предприятия, выбрасывают в атмосферу, воду и почву токсичные вещества, тяжелые металлы и химические соединения',
+         'Интересный факт - Транспорт, сжигающий ископаемое топливо и выбрасывает в воздух парниковые газы, такие как CO2 и метан',
+         'Интересный факт - Неправильная утилизация отходов, приводит к загрязнению почвы и водоемов',
+         'Интересный факт - Тяжелые металлы (свинец, ртуть, кадмий) - попадают в окружающую среду из промышленных выбросов, загрязняют почву и воду, накапливаются в живых организмах',
+         'Интересный факт - Органические соединения (бензол, фенол, пестициды) - токсичны для живых организмов, загрязняют воду и почву']
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def mem(ctx):
+    img_name = random.choice(os.listdir('images'))
+    with open(f'images/{img_name}', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+    
+@bot.command()
+async def animals(ctx):
+    img_name = random.choice(os.listdir('animals'))
+    with open(f'animals/{img_name}', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+@bot.command()
+async def eco(ctx):
+    img_name = random.choice(os.listdir('eco'))
+    with open(f'eco/{img_name}', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+@bot.command()
+async def fact(ctx):
+    await ctx.send(random.choice(facts))
+    
+bot.run("MTI0ODkwNjQ5Nzc3NDA1OTU2NA.GIler0.H4ZPay7cxwgsxonH2f-qSev1PIZOeg4c6mKSU4")
